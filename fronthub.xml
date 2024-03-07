@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.1.0
+- https://www.phpmyadmin.net
+-
+- Хост: 127.0.0.1
+- Время создания: Мар 07 2024 г., 08:27
+- Версия сервера: 10.4.18-MariaDB
+- Версия PHP: 7.4.18
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="fronthub" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="answer">
+                CREATE TABLE `answer` (
+                  `answer_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `question_id` int(11) DEFAULT NULL,
+                  `user_id` int(11) DEFAULT NULL,
+                  `data_id` int(11) DEFAULT NULL,
+                  `answer_text` varchar(255) NOT NULL,
+                  `correct` tinyint(1) DEFAULT NULL,
+                  PRIMARY KEY (`answer_id`),
+                  KEY `question_id` (`question_id`),
+                  KEY `user_id` (`user_id`),
+                  KEY `data_id` (`data_id`),
+                  CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`),
+                  CONSTRAINT `answer_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`),
+                  CONSTRAINT `answer_ibfk_3` FOREIGN KEY (`data_id`) REFERENCES `data_storage` (`data_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="branch">
+                CREATE TABLE `branch` (
+                  `branch_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `branch_name` varchar(255) NOT NULL,
+                  PRIMARY KEY (`branch_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="category">
+                CREATE TABLE `category` (
+                  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `category_name` varchar(255) NOT NULL,
+                  PRIMARY KEY (`category_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="commit">
+                CREATE TABLE `commit` (
+                  `commit_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `commit_text` text NOT NULL,
+                  PRIMARY KEY (`commit_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="data_storage">
+                CREATE TABLE `data_storage` (
+                  `data_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `path` varchar(255) NOT NULL,
+                  `data_storage` mediumblob NOT NULL,
+                  PRIMARY KEY (`data_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="question">
+                CREATE TABLE `question` (
+                  `question_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` int(11) DEFAULT NULL,
+                  `data_id` int(11) DEFAULT NULL,
+                  `question_text` varchar(255) NOT NULL,
+                  `completed` tinyint(1) DEFAULT NULL,
+                  `QuestionTitle` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`question_id`),
+                  KEY `user_id` (`user_id`),
+                  KEY `data_id` (`data_id`),
+                  CONSTRAINT `question_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`),
+                  CONSTRAINT `question_ibfk_2` FOREIGN KEY (`data_id`) REFERENCES `data_storage` (`data_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="questioncategoryconnect">
+                CREATE TABLE `questioncategoryconnect` (
+                  `category_id` int(11) DEFAULT NULL,
+                  `question_id` int(11) DEFAULT NULL,
+                  KEY `category_id` (`category_id`),
+                  KEY `question_id` (`question_id`),
+                  CONSTRAINT `questioncategoryconnect_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
+                  CONSTRAINT `questioncategoryconnect_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="repository">
+                CREATE TABLE `repository` (
+                  `repository_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `data_id` int(11) DEFAULT NULL,
+                  `branch_id` int(11) DEFAULT NULL,
+                  `commit_id` int(11) DEFAULT NULL,
+                  `title` varchar(255) NOT NULL,
+                  `description` text DEFAULT NULL,
+                  PRIMARY KEY (`repository_id`),
+                  KEY `data_id` (`data_id`),
+                  KEY `branch_id` (`branch_id`),
+                  KEY `commit_id` (`commit_id`),
+                  CONSTRAINT `repository_ibfk_1` FOREIGN KEY (`data_id`) REFERENCES `data_storage` (`data_id`),
+                  CONSTRAINT `repository_ibfk_2` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`),
+                  CONSTRAINT `repository_ibfk_3` FOREIGN KEY (`commit_id`) REFERENCES `commit` (`commit_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="role">
+                CREATE TABLE `role` (
+                  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `role_name` varchar(255) NOT NULL,
+                  `permissions` varchar(255) NOT NULL,
+                  PRIMARY KEY (`role_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="userreposotoryconnect">
+                CREATE TABLE `userreposotoryconnect` (
+                  `user_id` int(11) DEFAULT NULL,
+                  `repository_id` int(11) DEFAULT NULL,
+                  KEY `user_id` (`user_id`),
+                  KEY `repository_id` (`repository_id`),
+                  CONSTRAINT `userreposotoryconnect_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`),
+                  CONSTRAINT `userreposotoryconnect_ibfk_2` FOREIGN KEY (`repository_id`) REFERENCES `repository` (`repository_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="user_table">
+                CREATE TABLE `user_table` (
+                  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `user_name` varchar(255) NOT NULL,
+                  `hashed_password` varchar(255) NOT NULL,
+                  `token` varchar(255) DEFAULT NULL,
+                  `role_id` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`user_id`),
+                  KEY `role_id` (`role_id`),
+                  CONSTRAINT `user_table_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - База данных: 'fronthub'
+    -->
+    <database name="fronthub">
+        <!-- Таблица answer -->
+        <table name="answer">
+            <column name="answer_id">1</column>
+            <column name="question_id">1</column>
+            <column name="user_id">1</column>
+            <column name="data_id">1</column>
+            <column name="answer_text">To create a new branch, use the command &quot;git branch branch_name&quot;</column>
+            <column name="correct">1</column>
+        </table>
+        <table name="answer">
+            <column name="answer_id">2</column>
+            <column name="question_id">2</column>
+            <column name="user_id">2</column>
+            <column name="data_id">3</column>
+            <column name="answer_text">Matplotlib is a popular data visualization library in Python</column>
+            <column name="correct">0</column>
+        </table>
+        <table name="answer">
+            <column name="answer_id">3</column>
+            <column name="question_id">3</column>
+            <column name="user_id">3</column>
+            <column name="data_id">2</column>
+            <column name="answer_text">You can use Firebase for user authentication in mobile apps</column>
+            <column name="correct">1</column>
+        </table>
+        <table name="answer">
+            <column name="answer_id">4</column>
+            <column name="question_id">4</column>
+            <column name="user_id">4</column>
+            <column name="data_id">2</column>
+            <column name="answer_text">Cross-validation is used to assess the performance of a machine learning model</column>
+            <column name="correct">0</column>
+        </table>
+        <table name="answer">
+            <column name="answer_id">5</column>
+            <column name="question_id">5</column>
+            <column name="user_id">5</column>
+            <column name="data_id">3</column>
+            <column name="answer_text">Jenkins is a popular tool for implementing continuous integration</column>
+            <column name="correct">1</column>
+        </table>
+        <!-- Таблица branch -->
+        <table name="branch">
+            <column name="branch_id">1</column>
+            <column name="branch_name">main</column>
+        </table>
+        <table name="branch">
+            <column name="branch_id">2</column>
+            <column name="branch_name">development</column>
+        </table>
+        <table name="branch">
+            <column name="branch_id">3</column>
+            <column name="branch_name">feature_branch_123</column>
+        </table>
+        <table name="branch">
+            <column name="branch_id">4</column>
+            <column name="branch_name">hotfix_branch</column>
+        </table>
+        <table name="branch">
+            <column name="branch_id">5</column>
+            <column name="branch_name">release_branch_v1.0</column>
+        </table>
+        <!-- Таблица category -->
+        <table name="category">
+            <column name="category_id">1</column>
+            <column name="category_name">Web Development</column>
+        </table>
+        <table name="category">
+            <column name="category_id">2</column>
+            <column name="category_name">Mobile App Development</column>
+        </table>
+        <table name="category">
+            <column name="category_id">3</column>
+            <column name="category_name">web development studios</column>
+        </table>
+        <table name="category">
+            <column name="category_id">4</column>
+            <column name="category_name">IT departments of banks, mobile operators, marketplaces</column>
+        </table>
+        <table name="category">
+            <column name="category_id">5</column>
+            <column name="category_name">Developing and maintaining the user interface</column>
+        </table>
+        <!-- Таблица commit -->
+        <table name="commit">
+            <column name="commit_id">1</column>
+            <column name="commit_text">Initial commit</column>
+        </table>
+        <table name="commit">
+            <column name="commit_id">2</column>
+            <column name="commit_text">Added new feature</column>
+        </table>
+        <table name="commit">
+            <column name="commit_id">3</column>
+            <column name="commit_text">Fixed bug #123</column>
+        </table>
+        <table name="commit">
+            <column name="commit_id">4</column>
+            <column name="commit_text">Refactored code</column>
+        </table>
+        <table name="commit">
+            <column name="commit_id">5</column>
+            <column name="commit_text">Merged feature branch</column>
+        </table>
+        <!-- Таблица data_storage -->
+        <table name="data_storage">
+            <column name="data_id">1</column>
+            <column name="path">/files/data_A</column>
+            <column name="data_storage">/path/to/realistic_file_A.txt</column>
+        </table>
+        <table name="data_storage">
+            <column name="data_id">2</column>
+            <column name="path">/files/data_B</column>
+            <column name="data_storage">/path/to/realistic_file_B.docx</column>
+        </table>
+        <table name="data_storage">
+            <column name="data_id">3</column>
+            <column name="path">/files/data_C</column>
+            <column name="data_storage">/path/to/realistic_file_C.jpg</column>
+        </table>
+        <table name="data_storage">
+            <column name="data_id">4</column>
+            <column name="path">/files/data_D</column>
+            <column name="data_storage">/path/to/realistic_file_D.pdf</column>
+        </table>
+        <table name="data_storage">
+            <column name="data_id">5</column>
+            <column name="path">/files/data_E</column>
+            <column name="data_storage">/path/to/realistic_file_E.xlsx</column>
+        </table>
+        <!-- Таблица question -->
+        <table name="question">
+            <column name="question_id">1</column>
+            <column name="user_id">1</column>
+            <column name="data_id">2</column>
+            <column name="question_text">How to create a new branch?</column>
+            <column name="completed">1</column>
+            <column name="QuestionTitle">How to create a new branch?</column>
+        </table>
+        <table name="question">
+            <column name="question_id">2</column>
+            <column name="user_id">2</column>
+            <column name="data_id">3</column>
+            <column name="question_text">What is the best data visualization library?</column>
+            <column name="completed">0</column>
+            <column name="QuestionTitle">What is the best data visualization library?</column>
+        </table>
+        <table name="question">
+            <column name="question_id">3</column>
+            <column name="user_id">3</column>
+            <column name="data_id">4</column>
+            <column name="question_text">How to handle user authentication in mobile apps?</column>
+            <column name="completed">1</column>
+            <column name="QuestionTitle">How to handle user authentication in mobile apps?</column>
+        </table>
+        <table name="question">
+            <column name="question_id">4</column>
+            <column name="user_id">3</column>
+            <column name="data_id">5</column>
+            <column name="question_text">What is the purpose of cross-validation?</column>
+            <column name="completed">0</column>
+            <column name="QuestionTitle">What is the purpose of cross-validation?</column>
+        </table>
+        <table name="question">
+            <column name="question_id">5</column>
+            <column name="user_id">2</column>
+            <column name="data_id">1</column>
+            <column name="question_text">How to implement continuous integration?</column>
+            <column name="completed">1</column>
+            <column name="QuestionTitle">How to implement continuous integration?</column>
+        </table>
+        <!-- Таблица questioncategoryconnect -->
+        <table name="questioncategoryconnect">
+            <column name="category_id">1</column>
+            <column name="question_id">1</column>
+        </table>
+        <table name="questioncategoryconnect">
+            <column name="category_id">2</column>
+            <column name="question_id">1</column>
+        </table>
+        <table name="questioncategoryconnect">
+            <column name="category_id">4</column>
+            <column name="question_id">3</column>
+        </table>
+        <table name="questioncategoryconnect">
+            <column name="category_id">3</column>
+            <column name="question_id">5</column>
+        </table>
+        <table name="questioncategoryconnect">
+            <column name="category_id">5</column>
+            <column name="question_id">2</column>
+        </table>
+        <!-- Таблица repository -->
+        <table name="repository">
+            <column name="repository_id">1</column>
+            <column name="data_id">1</column>
+            <column name="branch_id">1</column>
+            <column name="commit_id">1</column>
+            <column name="title">HTML5 &amp; CSS3. HTML5 и CSS3</column>
+            <column name="description">fundamental technologies</column>
+        </table>
+        <table name="repository">
+            <column name="repository_id">2</column>
+            <column name="data_id">2</column>
+            <column name="branch_id">2</column>
+            <column name="commit_id">2</column>
+            <column name="title">Flex и Grid CSS.</column>
+            <column name="description">Flex и Grid CSS.</column>
+        </table>
+        <table name="repository">
+            <column name="repository_id">3</column>
+            <column name="data_id">3</column>
+            <column name="branch_id">3</column>
+            <column name="commit_id">3</column>
+            <column name="title">Bootstrap 4</column>
+            <column name="description">Bootstrap 4</column>
+        </table>
+        <table name="repository">
+            <column name="repository_id">4</column>
+            <column name="data_id">4</column>
+            <column name="branch_id">4</column>
+            <column name="commit_id">4</column>
+            <column name="title">Bootstrap 5.3</column>
+            <column name="description">Bootstrap 5.3</column>
+        </table>
+        <table name="repository">
+            <column name="repository_id">5</column>
+            <column name="data_id">5</column>
+            <column name="branch_id">5</column>
+            <column name="commit_id">5</column>
+            <column name="title">CSS preprocessors</column>
+            <column name="description">CSS preprocessors</column>
+        </table>
+        <!-- Таблица role -->
+        <table name="role">
+            <column name="role_id">1</column>
+            <column name="role_name">Admin</column>
+            <column name="permissions">admin_permissions</column>
+        </table>
+        <table name="role">
+            <column name="role_id">2</column>
+            <column name="role_name">User</column>
+            <column name="permissions">user_permissions</column>
+        </table>
+        <table name="role">
+            <column name="role_id">3</column>
+            <column name="role_name">Moderator</column>
+            <column name="permissions">moderator_permissions</column>
+        </table>
+        <!-- Таблица userreposotoryconnect -->
+        <table name="userreposotoryconnect">
+            <column name="user_id">1</column>
+            <column name="repository_id">3</column>
+        </table>
+        <table name="userreposotoryconnect">
+            <column name="user_id">2</column>
+            <column name="repository_id">4</column>
+        </table>
+        <table name="userreposotoryconnect">
+            <column name="user_id">3</column>
+            <column name="repository_id">5</column>
+        </table>
+        <!-- Таблица user_table -->
+        <table name="user_table">
+            <column name="user_id">1</column>
+            <column name="user_name">John_Doe</column>
+            <column name="hashed_password">c4ca4238a0b923820dcc509a6f75849b</column>
+            <column name="token">e5e9fa1ba31ecd1ae84f75caaa474f3a</column>
+            <column name="role_id">2</column>
+        </table>
+        <table name="user_table">
+            <column name="user_id">2</column>
+            <column name="user_name">Alice_Smith</column>
+            <column name="hashed_password">c81e728d9d4c2f636f067f89cc14862c</column>
+            <column name="token">f7b3d4ebc32c1b1f1630816fa75f4b3b</column>
+            <column name="role_id">1</column>
+        </table>
+        <table name="user_table">
+            <column name="user_id">3</column>
+            <column name="user_name">Bob_Johnson</column>
+            <column name="hashed_password">eccbc87e4b5ce2fe28308fd9f2a7baf3</column>
+            <column name="token">d76f7d5a96a19841f4c6791a6e4eb2e5</column>
+            <column name="role_id">1</column>
+        </table>
+        <table name="user_table">
+            <column name="user_id">4</column>
+            <column name="user_name">Eva_Brown</column>
+            <column name="hashed_password">a87ff679a2f3e71d9181a67b7542122c</column>
+            <column name="token">b858cb282617fb0956d960215c8e84d9</column>
+            <column name="role_id">3</column>
+        </table>
+        <table name="user_table">
+            <column name="user_id">5</column>
+            <column name="user_name">Charlie_White</column>
+            <column name="hashed_password">e4da3b7fbbce2345d7772b0674a318d5</column>
+            <column name="token">2510c39011c5be704182423e3a695e91</column>
+            <column name="role_id">2</column>
+        </table>
+    </database>
+</pma_xml_export>

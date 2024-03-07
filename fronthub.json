@@ -1,0 +1,99 @@
+[
+{"type":"header","version":"5.1.0","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"fronthub"},
+{"type":"table","name":"answer","database":"fronthub","data":
+[
+{"answer_id":"1","question_id":"1","user_id":"1","data_id":"1","answer_text":"To create a new branch, use the command \"git branch branch_name\"","correct":"1"},
+{"answer_id":"2","question_id":"2","user_id":"2","data_id":"3","answer_text":"Matplotlib is a popular data visualization library in Python","correct":"0"},
+{"answer_id":"3","question_id":"3","user_id":"3","data_id":"2","answer_text":"You can use Firebase for user authentication in mobile apps","correct":"1"},
+{"answer_id":"4","question_id":"4","user_id":"4","data_id":"2","answer_text":"Cross-validation is used to assess the performance of a machine learning model","correct":"0"},
+{"answer_id":"5","question_id":"5","user_id":"5","data_id":"3","answer_text":"Jenkins is a popular tool for implementing continuous integration","correct":"1"}
+]
+}
+,{"type":"table","name":"branch","database":"fronthub","data":
+[
+{"branch_id":"1","branch_name":"main"},
+{"branch_id":"2","branch_name":"development"},
+{"branch_id":"3","branch_name":"feature_branch_123"},
+{"branch_id":"4","branch_name":"hotfix_branch"},
+{"branch_id":"5","branch_name":"release_branch_v1.0"}
+]
+}
+,{"type":"table","name":"category","database":"fronthub","data":
+[
+{"category_id":"1","category_name":"Web Development"},
+{"category_id":"2","category_name":"Mobile App Development"},
+{"category_id":"3","category_name":"web development studios"},
+{"category_id":"4","category_name":"IT departments of banks, mobile operators, marketplaces"},
+{"category_id":"5","category_name":"Developing and maintaining the user interface"}
+]
+}
+,{"type":"table","name":"commit","database":"fronthub","data":
+[
+{"commit_id":"1","commit_text":"0x496e697469616c20636f6d6d6974"},
+{"commit_id":"2","commit_text":"0x4164646564206e65772066656174757265"},
+{"commit_id":"3","commit_text":"0x4669786564206275672023313233"},
+{"commit_id":"4","commit_text":"0x5265666163746f72656420636f6465"},
+{"commit_id":"5","commit_text":"0x4d65726765642066656174757265206272616e6368"}
+]
+}
+,{"type":"table","name":"data_storage","database":"fronthub","data":
+[
+{"data_id":"1","path":"\/files\/data_A","data_storage":"0x2f706174682f746f2f7265616c69737469635f66696c655f412e747874"},
+{"data_id":"2","path":"\/files\/data_B","data_storage":"0x2f706174682f746f2f7265616c69737469635f66696c655f422e646f6378"},
+{"data_id":"3","path":"\/files\/data_C","data_storage":"0x2f706174682f746f2f7265616c69737469635f66696c655f432e6a7067"},
+{"data_id":"4","path":"\/files\/data_D","data_storage":"0x2f706174682f746f2f7265616c69737469635f66696c655f442e706466"},
+{"data_id":"5","path":"\/files\/data_E","data_storage":"0x2f706174682f746f2f7265616c69737469635f66696c655f452e786c7378"}
+]
+}
+,{"type":"table","name":"question","database":"fronthub","data":
+[
+{"question_id":"1","user_id":"1","data_id":"2","question_text":"How to create a new branch?","completed":"1","QuestionTitle":"How to create a new branch?"},
+{"question_id":"2","user_id":"2","data_id":"3","question_text":"What is the best data visualization library?","completed":"0","QuestionTitle":"What is the best data visualization library?"},
+{"question_id":"3","user_id":"3","data_id":"4","question_text":"How to handle user authentication in mobile apps?","completed":"1","QuestionTitle":"How to handle user authentication in mobile apps?"},
+{"question_id":"4","user_id":"3","data_id":"5","question_text":"What is the purpose of cross-validation?","completed":"0","QuestionTitle":"What is the purpose of cross-validation?"},
+{"question_id":"5","user_id":"2","data_id":"1","question_text":"How to implement continuous integration?","completed":"1","QuestionTitle":"How to implement continuous integration?"}
+]
+}
+,{"type":"table","name":"questioncategoryconnect","database":"fronthub","data":
+[
+{"category_id":"1","question_id":"1"},
+{"category_id":"2","question_id":"1"},
+{"category_id":"4","question_id":"3"},
+{"category_id":"3","question_id":"5"},
+{"category_id":"5","question_id":"2"}
+]
+}
+,{"type":"table","name":"repository","database":"fronthub","data":
+[
+{"repository_id":"1","data_id":"1","branch_id":"1","commit_id":"1","title":"HTML5 & CSS3. HTML5 и CSS3","description":"0x66756e64616d656e74616c20746563686e6f6c6f67696573"},
+{"repository_id":"2","data_id":"2","branch_id":"2","commit_id":"2","title":"Flex и Grid CSS.","description":"0x466c657820d0b82047726964204353532e"},
+{"repository_id":"3","data_id":"3","branch_id":"3","commit_id":"3","title":"Bootstrap 4","description":"0x426f6f7473747261702034"},
+{"repository_id":"4","data_id":"4","branch_id":"4","commit_id":"4","title":"Bootstrap 5.3","description":"0x426f6f74737472617020352e33"},
+{"repository_id":"5","data_id":"5","branch_id":"5","commit_id":"5","title":"CSS preprocessors","description":"0x4353532070726570726f636573736f7273"}
+]
+}
+,{"type":"table","name":"role","database":"fronthub","data":
+[
+{"role_id":"1","role_name":"Admin","permissions":"admin_permissions"},
+{"role_id":"2","role_name":"User","permissions":"user_permissions"},
+{"role_id":"3","role_name":"Moderator","permissions":"moderator_permissions"}
+]
+}
+,{"type":"table","name":"userreposotoryconnect","database":"fronthub","data":
+[
+{"user_id":"1","repository_id":"3"},
+{"user_id":"2","repository_id":"4"},
+{"user_id":"3","repository_id":"5"}
+]
+}
+,{"type":"table","name":"user_table","database":"fronthub","data":
+[
+{"user_id":"1","user_name":"John_Doe","hashed_password":"c4ca4238a0b923820dcc509a6f75849b","token":"e5e9fa1ba31ecd1ae84f75caaa474f3a","role_id":"2"},
+{"user_id":"2","user_name":"Alice_Smith","hashed_password":"c81e728d9d4c2f636f067f89cc14862c","token":"f7b3d4ebc32c1b1f1630816fa75f4b3b","role_id":"1"},
+{"user_id":"3","user_name":"Bob_Johnson","hashed_password":"eccbc87e4b5ce2fe28308fd9f2a7baf3","token":"d76f7d5a96a19841f4c6791a6e4eb2e5","role_id":"1"},
+{"user_id":"4","user_name":"Eva_Brown","hashed_password":"a87ff679a2f3e71d9181a67b7542122c","token":"b858cb282617fb0956d960215c8e84d9","role_id":"3"},
+{"user_id":"5","user_name":"Charlie_White","hashed_password":"e4da3b7fbbce2345d7772b0674a318d5","token":"2510c39011c5be704182423e3a695e91","role_id":"2"}
+]
+}
+]
